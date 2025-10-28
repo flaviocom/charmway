@@ -1,0 +1,1614 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Cores do Bling */
+    --primary-green: #28a745;
+    --primary-green-hover: #218838;
+    --secondary-gray: #6c757d;
+    --light-gray: #f8f9fa;
+    --border-gray: #dee2e6;
+    --text-dark: #212529;
+    --text-muted: #6c757d;
+    --white: #ffffff;
+    --danger-red: #dc3545;
+    
+    /* Espaçamentos */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+    --spacing-3xl: 32px;
+    
+    /* Bordas */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    
+    /* Sombras */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    
+    /* Transições */
+    --transition: 0.15s ease-in-out;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.5;
+    color: var(--text-dark);
+    background-color: var(--light-gray);
+    font-size: 14px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--white);
+    min-height: 100vh;
+    padding: 0 15px;
+}
+
+/* Header Moderno - Layout Desktop */
+.modern-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border-gray);
+    padding: var(--spacing-lg) var(--spacing-2xl);
+}
+
+.header-grid {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.header-identity {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-align: center;
+}
+
+.mobile-fields-container {
+    display: contents; /* No desktop, os elementos se comportam como se não houvesse container */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+.title-container {
+    text-align: center;
+}
+
+.main-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0;
+    margin-bottom: var(--spacing-sm);
+}
+
+.attendance-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.attendance-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.attendance-input {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    text-align: center;
+    min-width: 200px;
+    transition: var(--transition);
+}
+
+.attendance-input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+
+.date-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.date-card {
+    background: var(--light-gray);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    text-align: center;
+    min-width: 150px;
+}
+
+.date-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.date-input {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-align: center;
+    width: 100%;
+}
+
+.date-input:focus {
+    outline: none;
+}
+
+/* Formulário Principal */
+main {
+    padding: var(--spacing-2xl);
+}
+
+/* Cards de Campo */
+.field-card {
+    background: var(--white);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.field-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.field-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Inputs Modernos */
+.modern-input, .modern-textarea {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    transition: var(--transition);
+    background: var(--white);
+}
+
+.modern-input:focus, .modern-textarea:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+
+.modern-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* NOVO LAYOUT - Conforme imagem de referência */
+
+/* Linha 1: Nome e Endereço */
+.name-address-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Linha 2: Telefone, Frete, Desconto Geral e Anotações */
+.details-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Formas de Pagamento - Layout Horizontal */
+.payment-methods-row {
+    margin-bottom: var(--spacing-xl);
+}
+
+.payment-methods-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.payment-method-item {
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    background: var(--light-gray);
+}
+
+.payment-method-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+/* MELHORIA 4: Boleto com parcelas na mesma linha */
+.boleto-header-inline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.boleto-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.boleto-installments-inline {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.boleto-installments-inline .installments-input {
+    width: 60px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.payment-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-green);
+}
+
+.payment-label {
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+}
+
+.payment-details-input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+}
+
+/* MELHORIA 3: Campo dinâmico para Transferência */
+.payment-details-textarea {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    resize: vertical;
+    min-height: 60px;
+    font-family: inherit;
+}
+
+.payment-details-textarea:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+
+.boleto-details {
+    margin-top: var(--spacing-md);
+}
+
+.boleto-installments {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.installments-input {
+    width: 60px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.installments-label {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.credit-card-details {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.payment-installments-input {
+    width: 60px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+/* MELHORIA 6: Campos de prazo com 3 dígitos */
+.payment-days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.payment-day-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.payment-day-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.payment-day-input {
+    width: 80px !important;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 13px;
+}
+
+.payment-day-input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+
+/* Seção de Produtos */
+.products-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.products-section h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-lg);
+}
+
+.search-container {
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    max-width: none;
+}
+
+.search-input-wrapper {
+    position: relative;
+    flex-grow: 1; /* Permite que o wrapper ocupe o espaço disponível */
+    max-width: 400px; /* Limita a largura máxima do wrapper */
+}
+
+.search-input {
+    width: 100%;
+    padding-right: 40px; /* Espaço para o botão */
+}
+
+.clear-search-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    z-index: 1;
+}
+.clear-search-btn.visible {
+    display: flex;
+}
+
+/* Tabela de Produtos */
+.products-table-container {
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--white);
+    /* Removendo max-height e overflow-y para tirar a barra de rolagem */
+    max-height: unset;
+    overflow-y: unset;
+    overflow-x: hidden; /* Garantir que não haja scroll horizontal */
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.products-table th {
+    background: var(--light-gray);
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-dark);
+    border-bottom: 1px solid var(--border-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.products-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-gray);
+    vertical-align: middle;
+}
+
+.products-table tr:hover {
+    background: rgba(0, 123, 255, 0.1); /* Azul claro */
+}
+
+.products-table tr.has-quantity {
+    background-color: rgba(40, 167, 69, 0.2); /* Verde mais escuro */
+}
+
+.products-table tr.has-quantity:hover {
+    background: rgba(40, 167, 69, 0.15);
+}
+
+.product-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.price {
+    text-align: right;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.quantity-input, .discount-input {
+    width: 80px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.quantity-input:focus, .discount-input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+
+.highlight-discount {
+    background-color: rgba(255, 193, 7, 0.2);
+    border-color: #ffc107;
+}
+
+/* Produtos Adicionais */
+.additional-product-row {
+    background: rgba(108, 117, 125, 0.05);
+}
+
+.additional-product-row.has-quantity {
+    background: rgba(40, 167, 69, 0.1);
+}
+
+.additional-product-name-input, .additional-product-quantity-input, 
+.additional-product-price-input, .additional-product-discount-input {
+    width: 80px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    text-align: center;
+}
+
+.additional-product-name-input {
+    width: 100%;
+    text-align: left;
+}
+
+.remove-additional-product-btn {
+    background: var(--danger-red);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.remove-additional-product-btn:hover {
+    background: #c82333;
+}
+
+/* Resumo do Pedido */
+.summary-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.summary-card {
+    background: var(--white);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.summary-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-gray);
+    padding-bottom: var(--spacing-sm);
+}
+
+.summary-content {
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.summary-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+    font-size: 14px;
+    gap: var(--spacing-md);
+}
+
+.summary-item span:first-child {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.currency {
+    font-weight: 600;
+    color: var(--primary-green);
+}
+
+.summary-item input {
+    max-width: 120px;
+    text-align: right;
+}
+
+.highlight-settlement-value {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--primary-green);
+}
+
+/* Detalhes das Parcelas */
+.installments-section {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--border-gray);
+}
+
+.installments-section h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
+}
+
+.installment-item {
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid rgba(222, 226, 230, 0.5);
+}
+
+.installment-item:last-child {
+    border-bottom: none;
+}
+
+/* Botões de Ação */
+.action-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.btn {
+    padding: var(--spacing-md) var(--spacing-xl);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    min-width: 140px;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: var(--primary-green);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: var(--primary-green-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    background: var(--secondary-gray);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-warning {
+    background: #ffc107;
+    color: var(--text-dark);
+}
+
+.btn-warning:hover {
+    background: #e0a800;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-success {
+    background: #17a2b8;
+    color: var(--white);
+}
+
+.btn-success:hover {
+    background: #138496;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Botões de Scroll Automático */
+.scroll-buttons {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    z-index: 1000;
+}
+
+.scroll-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(40, 167, 69, 0.9);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(10px);
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.scroll-btn:hover,
+.scroll-btn:focus {
+    background: var(--primary-green);
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+.scroll-btn:active {
+    transform: scale(0.95);
+    background: var(--primary-green-hover);
+}
+
+.scroll-arrow {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    .modern-header {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    /* Cabeçalho Mobile - Layout da imagem */
+    .header-grid {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: center;
+    }
+
+    .header-identity {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        text-align: center;
+        width: 100%;
+    }
+
+    .logo-container {
+        justify-content: center;
+        order: 1;
+    }
+
+    .logo {
+        height: 45px;
+    }
+
+    .title-container {
+        order: 2;
+    }
+
+    .main-title {
+        font-size: 24px;
+        margin-bottom: var(--spacing-lg);
+        font-weight: 700;
+    }
+
+    /* Container para os campos lado a lado */
+    .mobile-fields-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+        width: 100%;
+        order: 3;
+    }
+
+    .attendance-field {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+        width: 100%;
+    }
+
+    .attendance-label {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-bottom: 2px;
+    }
+
+    .attendance-input {
+        min-width: unset;
+        width: 100%;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 13px;
+        text-align: left;
+    }
+
+    .date-container {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .date-card {
+        min-width: unset;
+        width: 100%;
+        padding: var(--spacing-sm);
+        background: var(--light-gray);
+        border: 1px solid var(--border-gray);
+    }
+
+    .date-label {
+        font-size: 10px;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .date-input {
+        font-size: 13px;
+    }
+
+    /* Formulário Principal */
+    main {
+        padding: var(--spacing-xl) var(--spacing-md);
+        margin-top: var(--spacing-xl);
+    }
+
+    /* Nome e Endereço - Stack vertical */
+    .name-address-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    /* Telefone e Frete na mesma linha */
+    .details-row {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: var(--spacing-lg);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .details-row .field-card:nth-child(1) { /* Telefone */
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .details-row .field-card:nth-child(2) { /* Frete */
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .details-row .field-card:nth-child(3) { /* Desconto Geral */
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .details-row .field-card:nth-child(4) { /* Anotações */
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    /* Formas de Pagamento - Layout 2x2 */
+    .payment-methods-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: var(--spacing-lg);
+    }
+
+    .payment-method-item {
+        padding: var(--spacing-lg);
+    }
+
+    .payment-methods-container .payment-method-item:nth-child(1) { /* PIX */
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .payment-methods-container .payment-method-item:nth-child(2) { /* Cartão */
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .payment-methods-container .payment-method-item:nth-child(3) { /* Boleto */
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .payment-methods-container .payment-method-item:nth-child(4) { /* Transferência */
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    /* Ajustes específicos para Boleto */
+    .boleto-header-inline {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+
+    .boleto-installments-inline {
+        align-self: flex-start;
+    }
+
+    .payment-days-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    /* Seção de Produtos */
+    .products-section h2 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: var(--spacing-lg);
+    }
+
+    /* Campo de busca */
+    .search-container {
+        flex-direction: row; /* Alterado para linha */
+        flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha se não houver espaço */
+        justify-content: space-between; /* Espaço entre os itens */
+        align-items: center; /* Alinha verticalmente no centro */
+        gap: var(--spacing-md);
+        max-width: 100%;
+        width: 100%;
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .search-input-wrapper {
+        flex-grow: 1;
+        flex-basis: 55%; /* Reduz a largura do campo de busca para caber o checkbox */
+        max-width: unset;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: var(--spacing-md);
+        padding-right: 40px;
+        font-size: 16px;
+        border-radius: var(--radius-lg);
+    }
+    
+    .clear-search-btn {
+        right: 8px;
+    }
+    
+    .hide-empty-container {
+        margin-left: 0;
+        justify-content: flex-end;
+        flex-grow: 0;
+        flex-basis: 40%; /* Garante que o checkbox ocupe espaço suficiente */
+    }
+
+    /* Tabela de Produtos - Responsiva */
+    .products-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .products-table {
+        min-width: 600px;
+    }
+
+    .products-table th,
+    .products-table td {
+        padding: var(--spacing-sm);
+        font-size: 12px;
+    }
+
+    .quantity-input, .discount-input {
+        width: 60px;
+        font-size: 12px;
+    }
+
+    /* Resumo do Pedido */
+    .summary-card {
+        padding: var(--spacing-lg);
+    }
+
+    .summary-content {
+        gap: var(--spacing-sm);
+    }
+
+    .summary-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-xs) 0;
+    }
+
+    .summary-item input {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Botões de Ação */
+    .action-buttons {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        align-items: stretch;
+    }
+
+    .btn {
+        min-width: unset;
+        width: 100%;
+        padding: var(--spacing-lg);
+        font-size: 16px;
+    }
+
+    /* Ajustes gerais para mobile */
+    .field-card {
+        padding: var(--spacing-lg);
+    }
+
+    .modern-input,
+    .modern-textarea {
+        padding: var(--spacing-md);
+        font-size: 16px; /* Evita zoom no iOS */
+    }
+
+    .payment-details-input,
+    .payment-details-textarea {
+        font-size: 16px; /* Evita zoom no iOS */
+    }
+
+    .installments-section {
+        margin-top: var(--spacing-lg);
+        padding-top: var(--spacing-lg);
+    }
+    
+    /* Botões de Scroll - Mobile */
+    .scroll-buttons {
+        right: 15px;
+        gap: var(--spacing-xs);
+    }
+    
+    .scroll-btn {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .scroll-arrow {
+        font-size: 16px;
+    }
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 12px;
+    }
+
+    .modern-header {
+        padding: var(--spacing-md);
+    }
+
+    .logo {
+        height: 40px;
+    }
+
+    .main-title {
+        font-size: 20px;
+    }
+
+    main {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .field-card {
+        padding: var(--spacing-md);
+    }
+
+    .payment-method-item {
+        padding: var(--spacing-md);
+    }
+
+    .summary-card {
+        padding: var(--spacing-md);
+    }
+
+    .products-table th,
+    .products-table td {
+        padding: var(--spacing-xs);
+        font-size: 11px;
+    }
+
+    .quantity-input, .discount-input {
+        width: 50px;
+        padding: var(--spacing-xs);
+    }
+
+    .btn {
+        padding: var(--spacing-md);
+        font-size: 14px;
+    }
+}
+
+
+
+
+/* Aumentar área de clique para PC */
+@media (min-width: 769px) {
+    .scroll-btn {
+        padding: 20px; /* Aumenta a área de clique */
+        width: 60px; /* Tamanho menor para o botão */
+        height: 60px; /* Tamanho menor para o botão */
+        box-sizing: border-box; /* Garante que padding e border sejam incluídos no width/height */
+        display: flex; /* Usa flexbox para centralizar o conteúdo */
+        align-items: center; /* Centraliza verticalmente */
+        justify-content: center; /* Centraliza horizontalmente */
+    }
+
+    .scroll-btn .scroll-arrow {
+        font-size: 24px; /* Aumenta o tamanho da seta para melhor visualização */
+    }
+}
+
+
+
+
+
+@media (min-width: 769px) {
+    .scroll-btn .scroll-arrow {
+        pointer-events: none;
+    }
+}
+
+
+
+
+
+@media (max-width: 768px) {
+    .date-container {
+        justify-content: flex-end;
+    }
+
+    .date-card {
+        min-width: unset; /* Remove o min-width para permitir que a largura seja ajustada */
+        width: 120px; /* Define uma largura menor para o campo */
+        margin-left: auto; /* Alinha à direita */
+    }
+
+    .date-input {
+        width: 100%; /* Garante que o input ocupe a largura total do card */
+    }
+}
+
+
+
+/* Estilos para a coluna Lote */
+.lot-input {
+    width: 80px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    text-align: center;
+    font-size: 13px;
+    max-length: 6;
+}
+
+.lot-input:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+}
+
+
+/* Seção de Embalagens */
+.packaging-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.packaging-card {
+    background: var(--white);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.packaging-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-gray);
+    padding-bottom: var(--spacing-sm);
+}
+
+.packaging-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.packaging-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.packaging-table th {
+    background: var(--light-gray);
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--text-dark);
+    border-bottom: 1px solid var(--border-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.packaging-table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-gray);
+    vertical-align: middle;
+}
+
+.packaging-table tr:hover {
+    background: rgba(0, 123, 255, 0.1);
+}
+
+.packaging-name-input, .packaging-quantity-input, .packaging-weight-input {
+    width: 100%;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--border-gray);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    text-align: center;
+}
+
+.packaging-name-input {
+    text-align: left;
+}
+
+.packaging-weight-total {
+    font-weight: 600;
+    color: var(--text-dark);
+    text-align: center;
+}
+
+.remove-packaging-btn {
+    background: var(--danger-red);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: var(--spacing-sm);
+}
+
+.remove-packaging-btn:hover {
+    background: #c82333;
+}
+
+.add-item-btn {
+    align-self: flex-start;
+    margin-top: var(--spacing-md);
+}
+
+
+
+/* Estilos para o campo de transporte */
+.transport-container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.transport-container select {
+    flex: 1;
+}
+
+.add-transport-btn {
+    background: var(--primary-green);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.add-transport-btn:hover {
+    background: var(--primary-green-hover);
+    transform: scale(1.1);
+}
+
+.add-transport-btn:active {
+    transform: scale(0.95);
+}
+
+.transport-display {
+    margin-left: var(--spacing-sm);
+    font-weight: 500;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.transport-display:before {
+    content: " - ";
+}
+
+.transport-display:empty {
+    display: none;
+}
+
+.transport-display:empty:before {
+    content: "";
+}
+
+/* Modal para adicionar nova opção de transporte */
+.transport-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.transport-modal-content {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl);
+    max-width: 400px;
+    width: 90%;
+    box-shadow: var(--shadow-lg);
+}
+
+.transport-modal h3 {
+    margin: 0 0 var(--spacing-lg) 0;
+    color: var(--text-dark);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.transport-modal-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+    margin-top: var(--spacing-lg);
+}
+
+.transport-modal-buttons .btn {
+    min-width: 80px;
+    padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+    .transport-container {
+        gap: var(--spacing-xs);
+    }
+    
+    .add-transport-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 16px;
+    }
+    
+    .transport-modal-content {
+        padding: var(--spacing-lg);
+        margin: var(--spacing-md);
+    }
+    
+    .transport-modal-buttons {
+        flex-direction: column;
+    }
+    
+    .transport-modal-buttons .btn {
+        width: 100%;
+    }
+}
+
+/* Estilos para o campo de desconto geral no novo local */
+.search-container .general-discount-card {
+    flex-grow: 0;
+    flex-basis: auto;
+    margin-left: auto; /* Empurra para a direita */
+    padding: var(--spacing-md);
+    box-shadow: none;
+    border: none;
+    background: none;
+}
+
+.search-container .general-discount-card .field-label {
+    text-align: right;
+    margin-bottom: var(--spacing-xs);
+}
+
+.search-container .general-discount-card .modern-input {
+    width: 120px; /* Largura fixa para o campo de desconto */
+    text-align: right;
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .search-container .general-discount-card {
+        margin-left: 0;
+        width: 100%;
+        text-align: left;
+        padding: var(--spacing-lg);
+        border: 1px solid var(--border-gray);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+    }
+    .search-container .general-discount-card .field-label {
+        text-align: left;
+    }
+    .search-container .general-discount-card .modern-input {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+
+
+
+/* Estilos para o campo de desconto geral no novo local */
+.search-container .general-discount-card {
+    flex-grow: 0;
+    flex-basis: auto;
+    margin-left: auto; /* Empurra para a direita */
+    padding: var(--spacing-md);
+    box-shadow: none;
+    border: none;
+    background: none;
+}
+
+.search-container .general-discount-card .field-label {
+    text-align: right;
+    margin-bottom: var(--spacing-xs);
+}
+
+.search-container .general-discount-card .modern-input {
+    width: 120px; /* Largura fixa para o campo de desconto */
+    text-align: right;
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .search-container .general-discount-card {
+        margin-left: 0;
+        width: 100%;
+        text-align: left;
+        padding: var(--spacing-lg);
+        border: 1px solid var(--border-gray);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+    }
+    .search-container .general-discount-card .field-label {
+        text-align: left;
+    }
+    .search-container .general-discount-card .modern-input {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+
+
+
+.copy-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 1.2em;
+    color: #007bff;
+    transition: color 0.2s ease;
+}
+
+.copy-icon:hover {
+    color: #0056b3;
+}
+
+.copy-icon:active {
+    color: #003f7f;
+}
+
+/* Estilos para o campo de desconto geral no novo local */
+.search-container .general-discount-card {
+    flex-grow: 0;
+    flex-basis: auto;
+    margin-left: auto; /* Empurra para a direita */
+    padding: var(--spacing-md);
+    box-shadow: none;
+    border: none;
+    background: none;
+}
+
+.search-container .general-discount-card .field-label {
+    text-align: right;
+    margin-bottom: var(--spacing-xs);
+}
+
+.search-container .general-discount-card .modern-input {
+    width: 120px; /* Largura fixa para o campo de desconto */
+    text-align: right;
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+@media (max-width: 768px) {
+    .search-container .general-discount-card {
+        margin-left: 0;
+        width: 100%;
+        text-align: left;
+        padding: var(--spacing-lg);
+        border: 1px solid var(--border-gray);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+    }
+    .search-container .general-discount-card .field-label {
+        text-align: left;
+    }
+    .search-container .general-discount-card .modern-input {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+
+
+/* Estilo para o ícone de copiar */
+.copy-icon {
+    cursor: pointer;
+    margin-left: 8px;
+    font-size: 16px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.copy-icon:hover {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .copy-icon {
+        font-size: 18px;
+        margin-left: 6px;
+    }
+}
+
