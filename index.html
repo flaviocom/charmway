@@ -81,7 +81,12 @@
             <!-- Formas de Pagamento - Layout Horizontal -->
             <div class="payment-methods-row">
                 <div class="field-card payment-methods-card">
-                    <label class="field-label">FORMAS DE PAGAMENTO:</label>
+                    <div class="payment-methods-header-row">
+                        <label class="field-label">FORMAS DE PAGAMENTO:</label>
+                        <label class="general-deadline-label-inline">Prazo Geral</label>
+                        <input type="number" id="general-deadline-days" class="general-deadline-input-inline" min="0" max="999" step="1" value="2" placeholder="dias">
+                        <span class="general-deadline-date-inline" id="general-deadline-date">09/11/2025</span>
+                    </div>
                     <div class="payment-methods-container">
                         <!-- PIX -->
                         <div class="payment-method-item">
@@ -98,9 +103,10 @@
                                 <input type="checkbox" id="payment-credit" class="payment-checkbox">
                                 <label for="payment-credit" class="payment-label">Cartão de Crédito</label>
                             </div>
-                            <div class="credit-card-details">
-                                <input type="number" id="payment-credit-installments" class="payment-installments-input" value="1" min="1" max="12" step="1">
-                                <span id="payment-installments-label" class="installments-label">Parcela</span>
+                            <div class="credit-card-details-inline">
+                                <input type="number" id="payment-credit-installments" class="payment-installments-input-inline" value="1" min="1" max="12" step="1">
+                                <span id="payment-installments-label" class="installments-label-inline">Parcelas</span>
+                                <span id="credit-installment-value" class="credit-installment-value-display-inline">de R$0,00</span>
                             </div>
                         </div>
 
@@ -149,6 +155,7 @@
                         <input type="checkbox" id="hide-empty-lines" class="payment-checkbox">
                         <label for="hide-empty-lines" class="payment-label">Ocultar linhas vazias</label>
                     </div>
+                    <button id="clear-quantities-btn" class="btn btn-secondary" title="Limpar todas as quantidades">🗑️ Limpar Quantidades</button>
                     <div class="field-card general-discount-card">
                         <label class="field-label">DESCONTO GERAL (%)</label>
                         <input type="number" id="general-discount" class="modern-input" step="0.01" min="0" max="100" placeholder="0.00">

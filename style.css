@@ -360,7 +360,7 @@ main {
 .credit-card-details {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: 2px;
 }
 
 .payment-installments-input {
@@ -369,6 +369,12 @@ main {
     border: 1px solid var(--border-gray);
     border-radius: var(--radius-sm);
     text-align: center;
+}
+
+.credit-installment-value-display {
+    font-size: 13px;
+    color: #2c3e50;
+    white-space: nowrap;
 }
 
 /* MELHORIA 6: Campos de prazo com 3 dígitos */
@@ -1612,3 +1618,132 @@ main {
     }
 }
 
+
+/* Prazo Geral */
+.general-deadline-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background-color: #f0f8ff;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.general-deadline-label {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.general-deadline-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.general-deadline-input {
+    width: 70px;
+    padding: 6px 8px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.general-deadline-date {
+    font-size: 13px;
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 6px 12px;
+    background-color: #fff;
+    border: 1px solid #4a90e2;
+    border-radius: 4px;
+}
+
+
+/* Prazo Geral Inline (mesma linha de FORMAS DE PAGAMENTO) */
+.payment-methods-header-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.general-deadline-container-inline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.general-deadline-container-inline .general-deadline-label {
+    margin: 0;
+}
+
+.general-deadline-container-inline .general-deadline-inputs {
+    gap: 6px;
+}
+
+
+/* Estilos para Prazo Geral inline */
+.general-deadline-label-inline {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.general-deadline-input-inline {
+    width: 50px;
+    padding: 4px 6px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.general-deadline-date-inline {
+    font-size: 13px;
+    color: #2c3e50;
+    font-weight: 600;
+    padding: 4px 8px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+/* Estilos para Cartão de Crédito inline */
+.credit-card-details-inline {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+}
+
+.payment-installments-input-inline {
+    width: 45px;
+    padding: 4px 6px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 13px;
+    text-align: center;
+}
+
+.installments-label-inline {
+    font-size: 13px;
+    color: #2c3e50;
+    white-space: nowrap;
+    margin: 0 2px;
+}
+
+.credit-installment-value-display-inline {
+    font-size: 13px;
+    color: #2c3e50;
+    white-space: nowrap;
+    margin-left: 2px;
+}

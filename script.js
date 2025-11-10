@@ -33,7 +33,7 @@ const products = [
     { id: 30, name: "Desodorante IV", catalogPrice: 84.9, weight: 0.252 },
     { id: 31, name: "Desodorante V", catalogPrice: 84.9, weight: 0.247 },
     { id: 32, name: "Gel refrescante pós Barba", catalogPrice: 74.9, weight: 0.15 },
-    { id: 33, name: "Catálogo", catalogPrice: 24.00, applyGeneralDiscount: false, weight: 0.094 },
+    { id: 33, name: "Catálogo", catalogPrice: 22.00, applyGeneralDiscount: false, weight: 0.094 },
     { id: 34, name: "Talão de consumidor", catalogPrice: 7.00, applyGeneralDiscount: false, weight: 0.07 }
 ];
 
@@ -52,6 +52,7 @@ let orderState = {
     transportOption: '', // Nova propriedade para transporte
     installments: 1,
     generalDiscount: 0,
+    generalDeadlineDays: 2, // Prazo geral padrão
     paymentDays: [], // Vazio inicialmente
     notes: '',
     paymentMethods: {
@@ -97,6 +98,7 @@ function initializeApp() {
     updatePaymentDates();
     renderPaymentDaysInputs();
     updateInstallmentsText(); // MELHORIA 5: Atualizar texto singular/plural
+    updateGeneralDeadlineDate(); // Atualizar data do Prazo Geral
     
     // Inicializar visibilidade do campo de parcelas do cartão de crédito
     const creditCheckbox = document.getElementById('payment-credit');
@@ -135,6 +137,37 @@ function setCurrentDate() {
         orderState.orderDate = formattedDate;
     }
     updatePaymentDates();
+}
+
+// Função para atualizar a data do Prazo Geral
+function updateGeneralDeadlineDate() {
+    const orderDateElement = document.getElementById('order-date');
+    const generalDeadlineDateElement = document.getElementById('general-deadline-date');
+    const generalDeadlineDaysInput = document.getElementById('general-deadline-days');
+    
+    if (!orderDateElement || !generalDeadlineDateElement) return;
+    
+    // Se o input estiver vazio, limpar a data também
+    if (!generalDeadlineDaysInput || !generalDeadlineDaysInput.value) {
+        generalDeadlineDateElement.textContent = '';
+        return;
+    }
+    
+    // Carregar valor do input se existir
+    if (generalDeadlineDaysInput && generalDeadlineDaysInput.value) {
+        orderState.generalDeadlineDays = parseInt(generalDeadlineDaysInput.value) || 0;
+    }
+    
+    const orderDate = orderDateElement.value ? new Date(orderDateElement.value + 'T00:00:00') : new Date();
+    const days = orderState.generalDeadlineDays || 0;
+    const deadlineDate = new Date(orderDate.getTime() + days * 24 * 60 * 60 * 1000);
+    
+    generalDeadlineDateElement.textContent = deadlineDate.toLocaleDateString('pt-BR');
+    
+    // Atualizar o valor do input se necessário
+    if (generalDeadlineDaysInput && !generalDeadlineDaysInput.value) {
+        generalDeadlineDaysInput.value = orderState.generalDeadlineDays;
+    }
 }
 
 // MELHORIA 6: Função para renderizar campos de prazo com 3 dígitos
@@ -205,19 +238,42 @@ function updatePaymentDates() {
     const settlementValue = calculateSettlementValue();
     const installmentValue = settlementValue / orderState.installments;
 
-    for (let i = 0; i < orderState.installments; i++) {
-        const days = orderState.paymentDays[i] || 0;
-        // Corrigir o cálculo: não adicionar +1 dia extra
-        const paymentDate = new Date(orderDate.getTime() + days * 24 * 60 * 60 * 1000);
+    // Adicionar informacao do Cartao de Credito se selecionado
+    if (orderState.paymentMethods.credit.enabled) {
+        const creditInstallments = orderState.paymentMethods.credit.installments || 1;
+        const creditInstallmentValue = settlementValue / creditInstallments;
+        const creditItem = document.createElement('div');
+        creditItem.className = 'installment-item';
+        creditItem.innerHTML = `<strong class="highlight-settlement-date">Cartao de Credito:</strong> <span class="highlight-settlement-date">${creditInstallments} Parcela${creditInstallments > 1 ? 's' : ''} de ${formatCurrency(creditInstallmentValue)}</span>`;
+        installmentsDetails.appendChild(creditItem);
+    }
+
+    // Verificar se Boleto está selecionado
+    const isBoletoSelected = orderState.paymentMethods.boleto.enabled;
+    
+    if (isBoletoSelected) {
+        // Se Boleto: usar prazos específicos do Boleto
+        for (let i = 0; i < orderState.installments; i++) {
+            const days = orderState.paymentDays[i] || 0;
+            const paymentDate = new Date(orderDate.getTime() + days * 24 * 60 * 60 * 1000);
+            const installmentItem = document.createElement('div');
+            installmentItem.className = 'installment-item';
+            
+            if (orderState.installments === 1) {
+                installmentItem.innerHTML = `<strong class="highlight-settlement-date">Acerto até dia:</strong> <span class="highlight-settlement-date">${paymentDate.toLocaleDateString('pt-BR')}</span>`;
+            } else {
+                installmentItem.innerHTML = `<strong>${i + 1}ª Parcela ${formatCurrency(installmentValue)} - <span class="highlight-settlement-date">(Acerto até dia):</span></strong> <span class="highlight-settlement-date">${paymentDate.toLocaleDateString('pt-BR')}</span>`;
+            }
+            
+            installmentsDetails.appendChild(installmentItem);
+        }
+    } else {
+        // Se nenhum Boleto ou se PIX, Cartão ou Transferência: usar Prazo Geral (padrão)
+        const generalDeadlineDays = orderState.generalDeadlineDays || 0;
+        const paymentDate = new Date(orderDate.getTime() + generalDeadlineDays * 24 * 60 * 60 * 1000);
         const installmentItem = document.createElement('div');
         installmentItem.className = 'installment-item';
-        
-        if (orderState.installments === 1) {
-            installmentItem.innerHTML = `<strong class=\"highlight-settlement-date\">Acerto até dia:</strong> <span class=\"highlight-settlement-date\">${paymentDate.toLocaleDateString('pt-BR')}</span>`;
-        } else {
-            installmentItem.innerHTML = `<strong>${i + 1}ª Parcela ${formatCurrency(installmentValue)} - <span class=\"highlight-settlement-date\">(Acerto até dia):</span></strong> <span class=\"highlight-settlement-date\">${paymentDate.toLocaleDateString('pt-BR')}</span>`;
-        }
-        
+        installmentItem.innerHTML = `<strong class="highlight-settlement-date">Acerto até dia:</strong> <span class="highlight-settlement-date">${paymentDate.toLocaleDateString('pt-BR')}</span>`;
         installmentsDetails.appendChild(installmentItem);
     }
 }
@@ -257,6 +313,12 @@ function loadSavedData() {
             document.getElementById('transport-select').value = orderState.transportOption || '';
             document.getElementById('installments').value = orderState.installments || 1;
             document.getElementById('notes').value = orderState.notes || '';
+            
+            // Carregar Prazo Geral
+            const generalDeadlineDaysInput = document.getElementById('general-deadline-days');
+            if (generalDeadlineDaysInput) {
+                generalDeadlineDaysInput.value = orderState.generalDeadlineDays || 2;
+            }
             
             // Carregar formas de pagamento
             if (orderState.paymentMethods) {
@@ -538,6 +600,14 @@ function setupEventListeners() {
             saveData();
         }
         
+        // Event listener para Prazo Geral
+        if (e.target.id === 'general-deadline-days') {
+            orderState.generalDeadlineDays = parseInt(e.target.value) || 0;
+            updateGeneralDeadlineDate();
+            updatePaymentDates();
+            saveData();
+        }
+        
         // MELHORIA 5: Event listener para parcelas do Boleto
         if (e.target.id === 'installments') {
             const newInstallments = parseInt(e.target.value) || 1;
@@ -559,6 +629,7 @@ function setupEventListeners() {
             const newInstallments = parseInt(e.target.value) || 1;
             orderState.paymentMethods.credit.installments = Math.max(1, Math.min(12, newInstallments));
             updateInstallmentsText(); // MELHORIA 5: Atualizar texto
+            updateSummary(); // Atualizar valor da parcela dinamicamente
             saveData();
         }
         
@@ -587,19 +658,23 @@ function setupEventListeners() {
     document.addEventListener('change', function(e) {
         if (e.target.id === 'payment-pix') {
             orderState.paymentMethods.pix.enabled = e.target.checked;
+            updatePaymentDates(); // Atualizar datas dinamicamente
             saveData();
         }
         if (e.target.id === 'payment-transfer') {
             orderState.paymentMethods.transfer.enabled = e.target.checked;
+            updatePaymentDates(); // Atualizar datas dinamicamente
             saveData();
         }
         if (e.target.id === 'payment-boleto') {
             orderState.paymentMethods.boleto.enabled = e.target.checked;
+            updatePaymentDates(); // Atualizar datas dinamicamente
             saveData();
         }
         if (e.target.id === 'payment-credit') {
             orderState.paymentMethods.credit.enabled = e.target.checked;
             toggleCreditInstallmentsField(e.target.checked);
+            updatePaymentDates(); // Atualizar datas dinamicamente
             saveData();
         }
         
@@ -638,6 +713,9 @@ function setupEventListeners() {
         }
         if (e.target.id === 'clear-search-btn') {
             clearProductSearch();
+        }
+        if (e.target.id === 'clear-quantities-btn') {
+            clearQuantities();
         }
         if (e.target.id === 'export-excel-btn') {
             exportToExcel();
@@ -770,6 +848,14 @@ function updateSummary() {
     
     const discountedValueEl = document.getElementById('discounted-value');
     if (discountedValueEl) discountedValueEl.textContent = formatCurrency(discountedValue);
+    
+    // Atualizar valor da parcela do Cartao de Credito
+    const creditInstallmentValueEl = document.getElementById('credit-installment-value');
+    if (creditInstallmentValueEl) {
+        const creditInstallments = orderState.paymentMethods.credit.installments || 1;
+        const creditInstallmentValue = settlementValue / creditInstallments;
+        creditInstallmentValueEl.textContent = `de ${formatCurrency(creditInstallmentValue)}`;
+    }
 }
 
 function formatCurrency(value) {
@@ -813,6 +899,7 @@ function clearOrder() {
         transportOption: '', // Limpar transporte
         installments: 1,
         generalDiscount: 0,
+        generalDeadlineDays: 0,
         paymentDays: [],
          notes: '',
         packaging: orderState.packaging.map(pkg => ({ ...pkg, quantity: 0 })), // Limpar apenas a quantidade de caixas
@@ -847,9 +934,11 @@ function clearOrder() {
     document.getElementById('address').value = '';
     document.getElementById('phone').value = '';
     // NÃO limpar attendance-by
-    document.getElementById('order-date').value = ''; // Será preenchido por setCurrentDate()
+    document.getElementById('order-date').value = ''; // Seru00e1 preenchido por setCurrentDate()
     document.getElementById('credit-paid').value = 0;
     document.getElementById('general-discount').value = 0;
+    document.getElementById('general-deadline-days').value = ''; // Limpar Prazo Geral
+    document.getElementById('general-deadline-date').textContent = '(definir prazo)'; // Limpar data do Prazo Geral
     document.getElementById('freight').value = 0;
     document.getElementById('transport-select').value = '';
     document.getElementById('installments').value = 1;
@@ -1113,7 +1202,9 @@ function generatePaymentConditionsHTML() {
     const creditCheckbox = document.getElementById('payment-credit');
     if (creditCheckbox && creditCheckbox.checked) {
         const creditInstallments = orderState.paymentMethods.credit.installments;
-        paymentMethods.push(`Cartão de Crédito: ${creditInstallments} Parcela${creditInstallments > 1 ? 's' : ''}`);
+        const settlementValue = calculateSettlementValue();
+        const creditInstallmentValue = settlementValue / creditInstallments;
+        paymentMethods.push(`Cartão de Crédito: ${creditInstallments} Parcela${creditInstallments > 1 ? 's' : ''} de ${formatCurrency(creditInstallmentValue)}`);
     }
 
     // Verificar Transferência Bancária (terceiro)
@@ -1147,17 +1238,27 @@ function generatePaymentConditionsHTML() {
         html += '</div>';
     }
     
-    for (let i = 0; i < orderState.installments; i++) {
-        const days = orderState.paymentDays[i] || 0;
-        // Corrigir o cálculo: não adicionar +1 dia extra
-        const paymentDate = new Date(orderDate.getTime() + days * 24 * 60 * 60 * 1000);
-        const installmentValue = calculateSettlementValue() / orderState.installments;
-        
-        if (orderState.installments === 1) {
-            html += `<p><strong style=\"font-size: 16px; font-weight: 700; color: #dc3545;\">Acerto até dia:</strong> <span style=\"font-size: 16px; font-weight: 700; color: #dc3545;\">${paymentDate.toLocaleDateString('pt-BR')}</span></p>`;
-        } else {
-            html += `<p><strong>${i + 1}ª Parcela ${formatCurrency(installmentValue)} - <span style=\"font-size: 16px; font-weight: 700; color: #dc3545;\">(Acerto até dia):</span></strong> <span style=\"font-size: 16px; font-weight: 700; color: #dc3545;\">${paymentDate.toLocaleDateString('pt-BR')}</span></p>`;
+    // Verificar se Boleto está selecionado
+    const isBoletoSelected = boletoCheckbox && boletoCheckbox.checked;
+    
+    if (isBoletoSelected) {
+        // Se Boleto: usar prazos específicos do Boleto
+        for (let i = 0; i < orderState.installments; i++) {
+            const days = orderState.paymentDays[i] || 0;
+            const paymentDate = new Date(orderDate.getTime() + days * 24 * 60 * 60 * 1000);
+            const installmentValue = calculateSettlementValue() / orderState.installments;
+            
+            if (orderState.installments === 1) {
+                html += `<p><strong style="font-size: 16px; font-weight: 700; color: #dc3545;">Acerto até dia:</strong> <span style="font-size: 16px; font-weight: 700; color: #dc3545;">${paymentDate.toLocaleDateString('pt-BR')}</span></p>`;
+            } else {
+                html += `<p><strong>${i + 1}ª Parcela ${formatCurrency(installmentValue)} - <span style="font-size: 16px; font-weight: 700; color: #dc3545;">(Acerto até dia):</span></strong> <span style="font-size: 16px; font-weight: 700; color: #dc3545;">${paymentDate.toLocaleDateString('pt-BR')}</span></p>`;
+            }
         }
+    } else {
+        // Se nenhum Boleto ou se PIX, Cartão ou Transferência: usar Prazo Geral (padrão)
+        const generalDeadlineDays = orderState.generalDeadlineDays || 0;
+        const paymentDate = new Date(orderDate.getTime() + generalDeadlineDays * 24 * 60 * 60 * 1000);
+        html += `<p><strong style="font-size: 16px; font-weight: 700; color: #dc3545;">Acerto até dia:</strong> <span style="font-size: 16px; font-weight: 700; color: #dc3545;">${paymentDate.toLocaleDateString('pt-BR')}</span></p>`;
     }
     
     return html;
@@ -1312,8 +1413,45 @@ function exportToExcel() {
             data.push([method]);
         });
         
-        for (let i = 0; i < orderState.installments; i++) {
-            const days = orderState.paymentDays[i] || 0;
+        // Verificar se Boleto está selecionado
+        const isBoletoSelected = boletoCheckbox && boletoCheckbox.checked;
+        
+        if (isBoletoSelected) {
+            // Se Boleto: usar prazos específicos do Boleto
+            for (let i = 0; i < orderState.installments; i++) {
+                const days = orderState.paymentDays[i] || 0;
+                
+                // Usar a data do campo "Data do Pedido", não a data atual do sistema
+                const orderDateElement = document.getElementById('order-date');
+                let orderDate;
+                
+                if (orderDateElement && orderDateElement.value) {
+                    // Corrigir a interpretação da data
+                    const dateValue = orderDateElement.value;
+                    // Se o valor está no formato incorreto, tentar corrigir
+                    if (dateValue.includes('-') && dateValue.length > 10) {
+                        // Formato incorreto detectado, usar data atual como fallback
+                        orderDate = new Date();
+                    } else {
+                        orderDate = new Date(dateValue + 'T00:00:00');
+                    }
+                } else {
+                    orderDate = new Date();
+                }
+                
+                // Corrigir o cálculo: não adicionar +1 dia extra
+                const paymentDate = new Date(orderDate.getTime() + days * 24 * 60 * 60 * 1000);
+                const installmentValue = calculateSettlementValue() / orderState.installments;
+                
+                if (orderState.installments === 1) {
+                    data.push(['Acerto até dia:', paymentDate.toLocaleDateString('pt-BR')]);
+                } else {
+                    data.push([`${i + 1}ª Parcela:`, formatCurrencyForExcel(installmentValue), 'Acerto até dia:', paymentDate.toLocaleDateString('pt-BR')]);
+                }
+            }
+        } else {
+            // Se nenhum Boleto ou se PIX, Cartão ou Transferência: usar Prazo Geral (padrão)
+            const generalDeadlineDays = orderState.generalDeadlineDays || 0;
             
             // Usar a data do campo "Data do Pedido", não a data atual do sistema
             const orderDateElement = document.getElementById('order-date');
@@ -1333,15 +1471,8 @@ function exportToExcel() {
                 orderDate = new Date();
             }
             
-            // Corrigir o cálculo: não adicionar +1 dia extra
-            const paymentDate = new Date(orderDate.getTime() + days * 24 * 60 * 60 * 1000);
-            const installmentValue = calculateSettlementValue() / orderState.installments;
-            
-            if (orderState.installments === 1) {
-                data.push(['Acerto até dia:', paymentDate.toLocaleDateString('pt-BR')]);
-            } else {
-                data.push([`${i + 1}ª Parcela:`, formatCurrencyForExcel(installmentValue), 'Acerto até dia:', paymentDate.toLocaleDateString('pt-BR')]);
-            }
+            const paymentDate = new Date(orderDate.getTime() + generalDeadlineDays * 24 * 60 * 60 * 1000);
+            data.push(['Acerto até dia:', paymentDate.toLocaleDateString('pt-BR')]);
         }
 
         if (orderState.notes) {
@@ -1424,6 +1555,26 @@ function clearProductSearch() {
         toggleClearSearchButton('');
         searchInput.focus();
     }
+}
+
+function clearQuantities() {
+    orderState.products.forEach(product => {
+        product.quantity = 0;
+    });
+    
+    orderState.additionalProducts.forEach(product => {
+        product.quantity = 0;
+    });
+    
+    orderState.packaging.forEach(pkg => {
+        pkg.quantity = 0;
+    });
+    
+    renderProductsTable();
+    renderPackagingTable();
+    updateSummary();
+    updatePaymentDates();
+    saveData();
 }
 
 // Funções de cálculo
