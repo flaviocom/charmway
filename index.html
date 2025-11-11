@@ -24,6 +24,7 @@
                         <label class="attendance-label">Atendimento por:</label>
                         <input type="text" id="attendance-by" class="attendance-input" placeholder="Nome do atendente">
                     </div>
+                    <button id="clear-order-btn" class="btn btn-warning" title="Limpar todos os dados do pedido">🗑️ Limpar Pedido</button>
                     <div class="date-container">
                         <div class="date-card">
                             <label class="date-label">Data do Pedido</label>
@@ -84,8 +85,8 @@
                     <div class="payment-methods-header-row">
                         <label class="field-label">FORMAS DE PAGAMENTO:</label>
                         <label class="general-deadline-label-inline">Prazo Geral</label>
-                        <input type="number" id="general-deadline-days" class="general-deadline-input-inline" min="0" max="999" step="1" value="2" placeholder="dias">
-                        <span class="general-deadline-date-inline" id="general-deadline-date">09/11/2025</span>
+                        <input type="number" id="general-deadline-days" class="general-deadline-input-inline" min="0" max="999" step="1" placeholder="dias">
+                        <span class="general-deadline-date-inline" id="general-deadline-date"></span>
                     </div>
                     <div class="payment-methods-container">
                         <!-- PIX -->
@@ -155,10 +156,12 @@
                         <input type="checkbox" id="hide-empty-lines" class="payment-checkbox">
                         <label for="hide-empty-lines" class="payment-label">Ocultar linhas vazias</label>
                     </div>
-                    <button id="clear-quantities-btn" class="btn btn-secondary" title="Limpar todas as quantidades">🗑️ Limpar Quantidades</button>
-                    <div class="field-card general-discount-card">
-                        <label class="field-label">DESCONTO GERAL (%)</label>
-                        <input type="number" id="general-discount" class="modern-input" step="0.01" min="0" max="100" placeholder="0.00">
+                    <div class="discount-and-clear-container">
+                        <div class="field-card general-discount-card">
+                            <label class="field-label">DESCONTO GERAL (%)</label>
+                            <input type="number" id="general-discount" class="modern-input" step="0.01" min="0" max="100" placeholder="0.00">
+                        </div>
+                        <button id="clear-quantities-btn" class="btn btn-secondary" title="Limpar todas as quantidades">🗑️ Limpar Quantidades</button>
                     </div>
                 </div>
 
@@ -259,7 +262,6 @@
 
             <!-- Botões de Ação -->
             <div class="action-buttons">
-                <button id="clear-order-btn" class="btn btn-warning">🗑️ Limpar Pedido</button>
                 <button id="save-order-btn" class="btn btn-primary">💾 Salvar Pedido</button>
                 <button id="print-order-btn" class="btn btn-secondary">🖨️ Imprimir Pedido</button>
                 <button id="export-excel-btn" class="btn btn-success">📊 Salvar em Excel</button>

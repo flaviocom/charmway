@@ -98,7 +98,6 @@ function initializeApp() {
     updatePaymentDates();
     renderPaymentDaysInputs();
     updateInstallmentsText(); // MELHORIA 5: Atualizar texto singular/plural
-    updateGeneralDeadlineDate(); // Atualizar data do Prazo Geral
     
     // Inicializar visibilidade do campo de parcelas do cartão de crédito
     const creditCheckbox = document.getElementById('payment-credit');
@@ -314,10 +313,10 @@ function loadSavedData() {
             document.getElementById('installments').value = orderState.installments || 1;
             document.getElementById('notes').value = orderState.notes || '';
             
-            // Carregar Prazo Geral
+            // Carregar Prazo Geral (vazio se não houver valor salvo)
             const generalDeadlineDaysInput = document.getElementById('general-deadline-days');
             if (generalDeadlineDaysInput) {
-                generalDeadlineDaysInput.value = orderState.generalDeadlineDays || 2;
+                generalDeadlineDaysInput.value = orderState.generalDeadlineDays || '';
             }
             
             // Carregar formas de pagamento

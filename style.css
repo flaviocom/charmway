@@ -78,7 +78,9 @@ body {
 }
 
 .mobile-fields-container {
-    display: contents; /* No desktop, os elementos se comportam como se não houvesse container */
+    display: flex;
+    align-items: flex-end;
+    gap: var(--spacing-md);
 }
 
 .logo-container {
@@ -833,10 +835,11 @@ main {
     /* Container para os campos lado a lado */
     .mobile-fields-container {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr auto 1fr;
         gap: var(--spacing-md);
         width: 100%;
         order: 3;
+        align-items: flex-end;
     }
 
     .attendance-field {
@@ -1746,4 +1749,39 @@ main {
     color: #2c3e50;
     white-space: nowrap;
     margin-left: 2px;
+}
+
+
+/* Container para DESCONTO GERAL e Limpar Quantidades */
+.discount-and-clear-container {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--spacing-lg);
+}
+
+.discount-and-clear-container .general-discount-card {
+    flex: 1;
+    margin: 0;
+}
+
+.discount-and-clear-container #clear-quantities-btn {
+    align-self: flex-end;
+    height: fit-content;
+}
+
+/* Mobile: mesma linha */
+@media (max-width: 768px) {
+    .discount-and-clear-container {
+        flex-direction: row;
+        gap: var(--spacing-md);
+    }
+    
+    .discount-and-clear-container .general-discount-card {
+        flex: 1;
+    }
+    
+    .discount-and-clear-container #clear-quantities-btn {
+        flex: 1;
+        white-space: nowrap;
+    }
 }
