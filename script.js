@@ -620,6 +620,7 @@ function setupEventListeners() {
             renderPaymentDaysInputs();
             updatePaymentDates();
             updateInstallmentsText(); // MELHORIA 5: Atualizar texto
+            updateSummary(); // NOVO: Atualizar valor da parcela do Boleto
             saveData();
         }
         
@@ -854,6 +855,14 @@ function updateSummary() {
         const creditInstallments = orderState.paymentMethods.credit.installments || 1;
         const creditInstallmentValue = settlementValue / creditInstallments;
         creditInstallmentValueEl.textContent = `de ${formatCurrency(creditInstallmentValue)}`;
+    }
+
+    // Atualizar valor da parcela do Boleto
+    const boletoInstallmentValueEl = document.getElementById('boleto-installment-value');
+    if (boletoInstallmentValueEl) {
+        const boletoInstallments = orderState.installments || 1;
+        const boletoInstallmentValue = settlementValue / boletoInstallments;
+        boletoInstallmentValueEl.textContent = `${formatCurrency(boletoInstallmentValue)}`;
     }
 }
 
@@ -1443,9 +1452,9 @@ function exportToExcel() {
                 const installmentValue = calculateSettlementValue() / orderState.installments;
                 
                 if (orderState.installments === 1) {
-                    data.push(['Acerto até dia:', paymentDate.toLocaleDateString('pt-BR')]);
+                    data.push(['Acerto até dia:', paymentDate.toLocaleDateString('pt-BR'), `Prazo: ${generalDeadlineDays} dias`]);
                 } else {
-                    data.push([`${i + 1}ª Parcela:`, formatCurrencyForExcel(installmentValue), 'Acerto até dia:', paymentDate.toLocaleDateString('pt-BR')]);
+                    data.push([`${i + 1}ª Parcela:`, formatCurrencyForExcel(installmentValue), `Prazo: ${days} dias`, 'Acerto até dia:', paymentDate.toLocaleDateString('pt-BR')]);
                 }
             }
         } else {
@@ -1471,7 +1480,7 @@ function exportToExcel() {
             }
             
             const paymentDate = new Date(orderDate.getTime() + generalDeadlineDays * 24 * 60 * 60 * 1000);
-            data.push(['Acerto até dia:', paymentDate.toLocaleDateString('pt-BR')]);
+            data.push(['Acerto até dia:', paymentDate.toLocaleDateString('pt-BR'), `Prazo: ${generalDeadlineDays} dias`]);
         }
 
         if (orderState.notes) {

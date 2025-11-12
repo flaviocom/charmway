@@ -1748,6 +1748,16 @@ main {
     font-size: 13px;
     color: #2c3e50;
     white-space: nowrap;
+}
+
+.boleto-installments-inline {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+    font-size: 13px;
+    color: #2c3e50;
+    white-space: nowrap;
     margin-left: 2px;
 }
 
